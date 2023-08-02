@@ -1,0 +1,39 @@
+.app {
+    display: flex;    
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 90%;
+    margin-top: 5%;
+}
+
+.each-task {
+    display: flex;
+    flex-flow: row;
+    padding: 5px;
+    margin: 0 auto;
+    gap: 7px;
+    align-items: center;
+}
+
+.task-remove-btn {
+    border: none;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+}
+
+.task-add-btn {
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+}
+
+.task-form {
+    display: flex;
+    flex-flow: row;
+    gap: 7px;
+    align-items: center;
+}

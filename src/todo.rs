@@ -42,16 +42,6 @@ impl Todos {
     }
 
     fn delete(&mut self, which: Uuid) {
-        // let mut todo_items = Vec::new();
-        //
-        // for item in self.items.clone().into_iter() {
-        //     if item.id != which {
-        //         todo_items.push(item);
-        //     }
-        // }
-        //
-        // self.items = todo_items;
-
         self.items = self
             .items
             .clone()
@@ -80,12 +70,14 @@ fn AddTaskForm(cx: Scope, todo_items: ReadSignal<Todos>) -> impl IntoView {
         log!("new task added \ntask list: {:?}", todo_items.get().items);
     };
     view! {cx,
-        <form on:submit=on_submit>
+        <form class="task-form" on:submit=on_submit>
             <input
+                class="task-input"
+                placeholder="enter a task..."
                 type="text"
                 node_ref=node_ref
             />
-            <input type="submit" value="Add task" />
+            <input class="task-add-btn" type="submit" value="Add task" />
         </form>
 
     }
@@ -97,18 +89,19 @@ fn TaskList(cx: Scope, todo_items: ReadSignal<Todos>) -> impl IntoView {
         use_context(cx).expect("no context provided for deleting items");
 
     view! {cx,
-        <div>
+        <div class="task-list">
             <For
                 each=move || todo_items.get().items
                 key=|task| task.id
                 view=move |cx, task| {
                     view! {cx,
-                        <div>
-                            <p>{task.item}</p>
+                        <div class="each-task">
+                            <p class="task">{task.item}</p>
                             <button
+                                class="task-remove-btn"
                                 on:click=move |_| { remove_items.update(|old_todos| old_todos.delete(task.id)) }
                             >
-                            "done"
+                            "◯"
                             </button>
                         </div>
                     }
@@ -127,8 +120,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     provide_context(cx, mark_items);
 
     view! {cx,
-        <div>
-            <p>"hello"</p>
+        <div class="app">
             <AddTaskForm todo_items=todo_items/>
             <TaskList todo_items=todo_items/>
         </div>
